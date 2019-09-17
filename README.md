@@ -16,7 +16,7 @@ Netflix deprecated Sleepy Puppy, so this is a fork to use the Burp extension wit
     * Default set ability
     * Add custom payloads
     * Until customization parts complete just update parsePayloads in \burp-extension\src\main\java\com\netflix\sleepypuppy\SleepyPuppyConnector.java and rebuild extension
-* Fix issue with 'Repeater Tab' 'Woke Payloads' adding + instead of URL encode, breaking payloads e.g ```"><img+src%3d'//buildingsecurity.in/mH'/>``` works fine in Active Scanning
+* Fix issue with 'Repeater Tab' 'Woke Payloads' adding + instead of URL encode, breaking payloads e.g ```"><img+src%3d'//domain'/>``` works fine in Active Scanning
 
 # Build Steps:
 
