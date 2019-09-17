@@ -16,6 +16,7 @@ Netflix deprecated Sleepy Puppy, so this is a fork to use the Burp extension wit
     * Default set ability
     * Add custom payloads
     * Until customization parts complete just update parsePayloads in \burp-extension\src\main\java\com\netflix\sleepypuppy\SleepyPuppyConnector.java and rebuild extension
+* Fix issue with 'Repeater' adding + instead of URL encode, breaking payloads e.g ```"><img+src%3d'//buildingsecurity.in/mH'/>```
 
 # Build Steps:
 
@@ -25,7 +26,8 @@ Netflix deprecated Sleepy Puppy, so this is a fork to use the Burp extension wit
 
 
 
-## Original Work: 
+## Original Work && Authors: 
 
-* [Page](https://github.com/netflix)
+* [Page](https://github.com/netflix/sleepy-puppy)
 * [API Documentation](https://github.com/netflix/sleepy-puppy/wiki/API)
+* [Scott Behrens](https://github.com/sbehrens) & [Patrick Kelley](https://github.com/monkeysecurity) for developing the awesome Sleepy Puppy and its API documentation
