@@ -20,7 +20,7 @@ Netflix deprecated Sleepy Puppy, so this is a fork to use the Burp extension wit
 # Build Steps:
 
 1. Install Gradle
-2. Run ```gradle clean jar``
+2. Run ```gradle clean jar```
 3. Outputs to ```/build/libs/wokepuppy-burp.jar```
 
 
