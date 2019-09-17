@@ -9,6 +9,9 @@
 *.egg-info
 *.swp
 dist
+burp-extension/bin/*
+burp-extension/build/*
+burp-extension/build/*
 build
 eggs
 *.old

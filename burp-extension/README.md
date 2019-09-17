@@ -1,6 +1,8 @@
 Sleepy Puppy Burp Extension
 ===========================
 
+## Hacked together example of using Sleepy Puppy For Automation
+
 Sleepy Puppy (https://github.com/Netflix/sleepy-puppy) is a cross-site scripting (XSS) payload management framework which simplifies the ability to capture, manage, and track XSS propagation over long periods of time. 
 
 The Sleepy Puppy Burp Extension simplifies the usage of Sleepy Puppy payloads from inside the Burp Suite during a security assessment.

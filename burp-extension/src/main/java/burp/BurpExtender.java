@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by rperam on 9/8/15.
+ * Updated by lardern on 09/16/19
  */
 public class BurpExtender implements IBurpExtender, IIntruderPayloadGeneratorFactory,
         IScannerCheck, ITab, IContextMenuFactory, ActionListener {
@@ -37,7 +38,7 @@ public class BurpExtender implements IBurpExtender, IIntruderPayloadGeneratorFac
         helpers = callbacks.getHelpers();
 
         // set the extension name
-        callbacks.setExtensionName("Sleepy Puppy Extension");
+        callbacks.setExtensionName("Woke Puppy Extension");
 
         // register as a context menu provider
         callbacks.registerContextMenuFactory(this);
@@ -70,7 +71,7 @@ public class BurpExtender implements IBurpExtender, IIntruderPayloadGeneratorFac
 
     @Override
     public String getTabCaption() {
-        return "Sleepy Puppy";
+        return "Woke Puppy";
     }
 
     @Override
@@ -120,7 +121,7 @@ public class BurpExtender implements IBurpExtender, IIntruderPayloadGeneratorFac
 
     @Override
     public String getGeneratorName() {
-        return "Sleepy Puppy";
+        return "Woke Puppy";
     }
 
     @Override
@@ -169,7 +170,7 @@ public class BurpExtender implements IBurpExtender, IIntruderPayloadGeneratorFac
             ArrayList<JMenuItem> menu = new ArrayList<>();
             if (invocationContext == IContextMenuInvocation.CONTEXT_MESSAGE_EDITOR_REQUEST
                     || invocationContext == IContextMenuInvocation.CONTEXT_MESSAGE_VIEWER_REQUEST) {
-                JMenu main = new JMenu("Sleepy Puppy Payloads");
+                JMenu main = new JMenu("Woke Puppy Payloads");
                 menu.add(main);
                 List<String> payloads = getSleepyPuppyAssessmentPayloads();
                 for (String payload : payloads) {
