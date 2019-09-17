@@ -12,6 +12,8 @@ dist
 burp-extension/bin/*
 burp-extension/build/*
 burp-extension/build/*
+.gradle
+.vscode
 build
 eggs
 *.old
